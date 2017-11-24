@@ -2,7 +2,7 @@
   "name": "eternal",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://biuuu.github.io/enternal",
+  "homepage": "https://biuuu.github.io/eternal",
   "dependencies": {
     "gh-pages": "^1.1.0",
     "react": "^16.1.1",
