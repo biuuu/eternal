@@ -21,7 +21,12 @@ const getLength = str => {
 }
 
 const formatCode = (text) => {
-  return text.replace(/1/g, '-').replace(/0/g, '•').replace(/[,.]/g, ' ').trim()
+  return text.replace(/1/g, '-')
+    .replace(/0/g, '•')
+    .replace(/[,.]/g, ' ')
+    .replace(/([^•-\s])/g, ' $1 ')
+    .replace(/\s\s/g, ' ')
+    .trim()
 }
 
 const codeStyle1 = (text) => {
@@ -50,7 +55,7 @@ morse.forEach(item => {
 })
 
 const mora2Code = (text, style = 2) => {
-  const kata = new Jaco(text).toKatakana().toString()
+  const kata = new Jaco(text).toKatakana().toString().replace(/ッ/g, '')
   let codeStr = kata
   let romajiStr = kata
   data.l2Mora.forEach(item => {
@@ -106,7 +111,6 @@ const code2Mora = (text) => {
   const formattedCode = formatCode(text)
   let moraStr = formattedCode
   let romajiStr = formattedCode
-  debugger
   data.l3Code.forEach(item => {
     let index = getIndexOfMora(moraStr, item)
     while (index !== -1) {
@@ -139,7 +143,7 @@ const code2Mora = (text) => {
     return char
   }).join(' ')
 
-  return { mora: moraStr, romaji: romajiStr }
+  return { mora: moraStr, romaji: romajiStr, mora2: new Jaco(moraStr).toHiragana() }
 }
 
 export { code2Mora, mora2Code }
