@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { Input, Button } from 'antd'
 import { injectGlobal } from 'styled-components'
 import { Link } from 'react-router-dom'
-
-const TextArea = Input.TextArea
 
 injectGlobal`
   .page-mio {
