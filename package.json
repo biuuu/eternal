@@ -4,8 +4,9 @@
   "private": true,
   "homepage": "http://www.danmu9.com",
   "dependencies": {
-    "antd": "^2.13.10",
+    "antd": "^3.0.2",
     "jaco": "^2.1.0-beta",
+    "pixi.js": "^4.6.2",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-loadable": "^5.3.1",
