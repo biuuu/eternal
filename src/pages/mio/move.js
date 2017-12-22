@@ -103,4 +103,31 @@ const move = () => {
   }
 }
 
+const computePos = (len, { width, height, x, y, rotation, direction }) => {
+  const rx = Math.cos(-rotation) * len
+  const ry = Math.sin(-rotation) * len
+  let _x = x - rx
+  let _y = y + ry
+  let _rotation = -rotation
+  const num = Number((0.4 - Math.random() * 0.2 - 0.3).toFixed(2))
+
+  if (_x < 0) {
+    _x = -_x % width
+    _rotation = Math.PI - _rotation + num
+  } else if (_x > width) {
+    _x = width - _x % width
+    _rotation = Math.PI - _rotation + num
+  }
+  if (_y > height) {
+    _y = height - _y % height
+    _rotation = -_rotation + num
+  } else if (_y < 0) {
+    _y = -_y % height
+    _rotation = -_rotation + num
+  }
+
+  return { x: _x, y: _y, rotation: -_rotation }
+}
+
 export default move()
+export { computePos }
