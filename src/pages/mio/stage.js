@@ -13,6 +13,22 @@ const getWinSize = () => {
   return { width, height }
 }
 
+const resetSize = () => {
+  const { width, height } = getWinSize()
+  if (app && app.view) {
+    app.view.width = width
+    app.view.height = height
+  }
+}
+
+const listenResize = () => {
+  window.addEventListener('resize', resetSize, false)
+}
+
+const unlistenResize = () => {
+  window.removeEventListener('resize', resetSize)
+}
+
 const initStage = () => {
   const { width, height } = getWinSize()
   app = new PIXI.Application({
@@ -20,16 +36,14 @@ const initStage = () => {
     backgroundColor: 0xffffff
   })
   app.view.style.display = 'block'
+  listenResize()
+  return app
 }
 
-const resetSize = () => {
-  const { width, height } = getWinSize()
-  app.view.width = width
-  app.view.height = height
+const removeStage = () => {
+  unlistenResize()
+  app.destroy(true)
+  app = null
 }
 
-window.addEventListener('resize', resetSize, false)
-
-initStage()
-
-export { app, size }
+export { initStage, removeStage, size }
