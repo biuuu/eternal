@@ -4,41 +4,50 @@ import * as PIXI from 'pixi.js'
 import { size, initStage, removeStage } from './stage'
 import move, { computePos } from './move'
 
-const run = (app) => () => {
-  const pic = new PIXI.Container()
-  const sprite = new PIXI.Sprite(PIXI.loader.resources['pic'].texture);
+const getTint = (speed) => {
+  const num = Math.floor(0xff - speed / 20 * (0xff - 0xee))
+  return num * Math.pow(16, 4) + num * Math.pow(16, 2) + num
+}
 
-  pic.height = sprite.height
-  pic.width = sprite.width
-  // Setup the position of the pic
-  pic.x = app.renderer.width / 2;
-  pic.y = app.renderer.height / 2;
+const run = (app, count = 1) => () => {
+  const container = new PIXI.particles.ParticleContainer(1500, {
+    rotation: true,
+    tint: true
+  })
+  container.width = app.renderer.width
+  container.height = app.renderer.height
+  const pics = []
+  for (let i = 0; i < count; i++) {
+    const pic = new PIXI.Sprite(PIXI.loader.resources['pic'].texture)
+    pic.x = app.renderer.width / 2;
+    pic.y = app.renderer.height / 2;
+    pic.anchor.x = 0.5
+    pic.anchor.y = 0.5
+    pic.rotation = Math.PI / 4
+    container.addChild(pic)
+    pics.push({
+      pic,
+      lastLength: Math.floor(Math.random() * 6000)
+    })
+  }
 
-  // Rotate around the center
-  sprite.anchor.x = 0.5;
-  sprite.anchor.y = 0.5;
-  const blurFt = new PIXI.filters.BlurFilter()
-  blurFt.blurX = 0
-  blurFt.blurY = 0
-  pic.filters = [blurFt]
-  pic.rotation = Math.PI/4
-  // Add the pic to the scene we are building
-  pic.addChild(sprite)
-  app.stage.addChild(pic);
+  app.stage.addChild(container)
 
   app.ticker.add(() => {
       // each frame we spin the pic around a bit
-      // if (app.ticker.lastTime % 1000 < 60) console.log(app.ticker.lastTime)
-      const { len, speed } = move(app.ticker.lastTime)
-      const { x, y, rotation } = computePos(len, {
-        x: pic.x, y: pic.y, width: size.width, height: size.height,
-        rotation: pic.rotation
-      })
-      blurFt.blurX = Math.abs(Math.floor(speed * Math.cos(rotation)))
-      blurFt.blurY = Math.abs(Math.floor(speed * Math.sin(rotation)))
-      pic.x = x
-      pic.y = y
-      pic.rotation = rotation
+      for (let i = 0; i < count; i++) {
+        const pic = pics[i].pic
+        const { len, speed } = move(app.ticker.lastTime, pics[i].lastLength)
+        pics[i].lastLength += len
+        const { x, y, rotation } = computePos(len, {
+          x: pic.x, y: pic.y, width: size.width, height: size.height,
+          rotation: pic.rotation
+        })
+        pic.tint = getTint(speed)
+        pic.x = x
+        pic.y = y
+        pic.rotation = rotation
+      }
   })
 }
 
@@ -46,17 +55,20 @@ class Mio extends Component {
   rootElm = null
 
   componentDidMount () {
-    document.title = 'no title'
-
+    document.title = 'WOW SO FAST'
+    const rgs = this.props.location.search.match(/count=(\d+)/)
+    const count = (rgs ? Number(rgs[1]) : 1) || 1
     const app = initStage()
 
     this.rootElm.appendChild(app.view)
 
     // load the texture we need
     if (!PIXI.loader.resources['pic']) {
-      PIXI.loader.add('pic', img).load(run(app))
+      PIXI.loader.add('pic', img).load(() => {
+        run(app, count)()
+      })
     } else {
-      run(app)()
+      run(app, count)()
     }
   }
 
@@ -65,7 +77,6 @@ class Mio extends Component {
   }
 
   render () {
-
     return (
       <div ref={elm => this.rootElm = elm} className="page-mio">
       </div>

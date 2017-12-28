@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js'
 
+PIXI.utils.skipHello()
+
 let app = null
 const size = {
   width: 0, height: 0

@@ -1,6 +1,6 @@
 const config = {
   sequence: [
-    { velocity: 1, type: 'even', duration: 3000 },
+    { velocity: 1, type: 'even', duration: 5000 },
     { velocity: 1, type: 'acc', velocity2: 20, duration: 2000 },
     { velocity: 20, type: 'even', duration: 3000 },
     { velocity: 20, type: 'dec', velocity2: 1, duration: 3000 },
@@ -93,14 +93,10 @@ const getLength = () => {
 
 const moved = getLength()
 
-const move = () => {
-  let lastLength = 0
-  return (time) => {
-    const { len, speed } = moved(time)
-    const result = len - lastLength
-    lastLength = len
-    return { len: result, speed }
-  }
+const move = (time, lastLength) => {
+  const { len, speed } = moved(time)
+  const result = len - lastLength
+  return { len: result, speed }
 }
 
 const computePos = (len, { width, height, x, y, rotation, direction }) => {
@@ -129,5 +125,5 @@ const computePos = (len, { width, height, x, y, rotation, direction }) => {
   return { x: _x, y: _y, rotation: -_rotation }
 }
 
-export default move()
+export default move
 export { computePos }

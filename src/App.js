@@ -13,6 +13,11 @@ const AsyncMio = Loadable({
   loading: Loading
 })
 
+const AsyncFeather = Loadable({
+  loader: () => import('./pages/feather/'),
+  loading: Loading
+})
+
 class App extends Component {
   render() {
     return (
@@ -20,6 +25,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={AsyncMio} />
           <Route path="/alice" component={AsyncAlice} />
+          <Route path="/feather" component={AsyncFeather} />
         </Switch>
       </Router>
     )
