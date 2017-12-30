@@ -5,7 +5,7 @@ var p = {
 var space = 24;		//文字间距
 var timeSpace = 0.1;		//出现时间间隔
 var timeFadeout = 0.3;		//渐隐时间
-var useContainer = true;		//是否使用容器
+var useContainer = false;		//是否使用容器
 
 var color = 0x666666,
 	font = 'Microsoft JhengHei',
