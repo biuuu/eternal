@@ -11,7 +11,7 @@
         const video = document.querySelector('video')
         if (!video) return
         window.gifshot.createGIF(Object.assign({
-          'video': [video.src]
+          'video': [video.currentSrc]
         }, params),function(obj) {
           if(!obj.error) {
             var image = obj.image,
