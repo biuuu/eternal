@@ -1,11 +1,11 @@
 ;(function () {
-  if (widnow.v2gifscript_jf8ejtf3gxm) {
+  if (window.v2gifscript_jf8ejtf3gxm) {
     return
   }
   const script = document.createElement('script')
   script.src = 'https://www.danmu9.com/light/gifshot.min.js'
   document.head.appendChild(script)
-  widnow.v2gifscript_jf8ejtf3gxm = new Promise(rev => {
+  window.v2gifscript_jf8ejtf3gxm = new Promise(rev => {
     script.onload = rev
     return (params) => {
       const video = document.querySelector('video')
