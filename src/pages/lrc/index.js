@@ -63,7 +63,7 @@ class Lrc extends React.Component {
           !name
           ? <ul>
               {
-                lrcNames.map(n => <li key={n}><Link to={`/lrc/${window.encodeURIComponent(n)}`}>{n}</Link></li>)
+                lrcNames.map(n => <li key={n}><Link to={`/lrc/${window.encodeURI(n)}`}>{n}</Link></li>)
               }
             </ul>
           : <div>
