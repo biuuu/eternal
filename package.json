@@ -5,6 +5,7 @@
   "homepage": "http://www.danmu9.com",
   "dependencies": {
     "antd": "^3.0.2",
+    "axios": "^0.17.1",
     "jaco": "^2.1.0-beta",
     "pixi.js": "^4.6.2",
     "react": "^16.1.1",
