@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
 
+const PageLrc = styled.div`
+  @media (min-width: 700px) {
+    width: 700px;
+    margin: auto;
+  }
+`
+
 const Text = styled.p`
   font-size: 16px;
   line-height: 1.5;
@@ -58,7 +65,7 @@ class Lrc extends React.Component {
   render () {
     const { name } = this.props.match.params
     return (
-      <div>
+      <PageLrc>
         {
           !name
           ? <ul>
@@ -71,7 +78,7 @@ class Lrc extends React.Component {
               <Text>{this.state.text}</Text>
             </div>
         }
-      </div>
+      </PageLrc>
     )
   }
 }
