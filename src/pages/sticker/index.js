@@ -2,7 +2,23 @@ import React from 'react'
 import img from '../../assets/rabi.jpg'
 import * as PIXI from 'pixi.js'
 import styled from 'styled-components'
-import { Input } from 'antd'
+import { Input, Button, Tooltip } from 'antd'
+
+// http://www.zhangxinxu.com/wordpress/2017/07/js-text-string-download-as-html-json-file/
+var tryDownload = function (context, filename) {
+  // 创建隐藏的可下载链接
+  var eleLink = document.createElement('a');
+  eleLink.download = filename;
+  eleLink.style.display = 'none';
+ 
+  // 如果是PNG图片，则context.toDataURL('image/png')
+  eleLink.href = context.toDataURL();
+  // 触发点击
+  document.body.appendChild(eleLink);
+  eleLink.click();
+  // 然后移除
+  document.body.removeChild(eleLink);
+}
 
 const Stage = styled.div`
   width: 100%;
@@ -15,8 +31,12 @@ const Stage = styled.div`
 
 const AreaIpt = styled.div`
   width: 240px;
+  text-align: center;
   .ant-input-group-wrapper {
     margin-top: 4px;
+  }
+  .ant-btn {
+    margin-top: 8px;
   }
 `
 
@@ -77,6 +97,10 @@ class Sticker extends React.Component {
       txt2: e.target.value
     }, this.updateText)
   }
+  download = () => {
+    this.app.renderer.render(this.app.stage)
+    tryDownload(this.app.renderer.view, this.state.txt1 || '图片')
+  }
   render () {
     return (
       <Stage>
@@ -84,6 +108,9 @@ class Sticker extends React.Component {
         <AreaIpt>
           <Input size="small" value={this.state.txt1} onChange={this.changeTxt1} addonBefore="文字1" />
           <Input size="small" value={this.state.txt2} onChange={this.changeTxt2} addonBefore="文字2" />
+          <Tooltip placement="bottom" title="也有可能下载不了，可以试试右键">
+            <Button onClick={this.download} icon="picture">下载图片</Button>
+          </Tooltip>
         </AreaIpt>
       </Stage>
     )
