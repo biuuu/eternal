@@ -18,6 +18,11 @@ const AsyncFeather = Loadable({
   loading: Loading
 })
 
+const AsyncSticker = Loadable({
+  loader: () => import('./pages/sticker/'),
+  loading: Loading
+})
+
 const AsyncLrc = Loadable({
   loader: () => import('./pages/lrc/'),
   loading: Loading
@@ -31,6 +36,7 @@ class App extends Component {
           <Route exact path="/" component={AsyncMio} />
           <Route path="/alice" component={AsyncAlice} />
           <Route path="/feather" component={AsyncFeather} />
+          <Route path="/sticker" component={AsyncSticker} />
           <Route path="/lrc/:name?" component={AsyncLrc} />
         </Switch>
       </Router>
