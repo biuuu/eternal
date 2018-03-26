@@ -49,6 +49,7 @@ class Sticker extends React.Component {
     txt2: ''
   }
   componentWillMount () {
+    document.titile = '沙雕兔子表情生成器'
     this.app = new PIXI.Application({
       width: 142, height: 142,
       transparent: true
