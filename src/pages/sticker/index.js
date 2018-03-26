@@ -49,7 +49,6 @@ class Sticker extends React.Component {
     txt2: ''
   }
   componentWillMount () {
-    document.titile = '沙雕兔子表情生成器'
     this.app = new PIXI.Application({
       width: 142, height: 142,
       transparent: true
@@ -82,6 +81,7 @@ class Sticker extends React.Component {
     this.txtShort.text = this.state.txt1
   }
   componentDidMount () {
+    document.title = '沙雕兔子'
     const stage = document.getElementById('sticker-stage')
     stage.appendChild(this.app.view)
   }
