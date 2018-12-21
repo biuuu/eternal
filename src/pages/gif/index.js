@@ -9,10 +9,6 @@ import {
 
 const { Meta } = Card
 const PageGif = styled.div`
-  @media (min-width: 700px) {
-    width: 700px;
-    margin: auto;
-  }
   text-align: center;
   > * {
     display: block;
