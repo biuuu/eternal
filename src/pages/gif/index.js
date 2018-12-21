@@ -21,6 +21,14 @@ const PageGif = styled.div`
   > span:first-child {
     margin-top: 100px;
   }
+  .ant-upload.ant-upload-drag {
+    display: inline-block;
+    padding: 0;
+    background: transparent;
+    border: none;
+    width: auto;
+    height: auto;
+  }
 `
 
 const tryDownload = (src, filename = 'image.gif') => {
@@ -51,14 +59,17 @@ class Gif extends React.Component {
           height: frameData[0].frameInfo.height
         })
         frameData.reverse().forEach(item => {
-          gif.addFrame(item.getImage(), { delay: item.frameInfo.delay * 10 })
+          const delay = item.frameInfo.delay || 1
+          gif.addFrame(item.getImage(), { delay: delay * 10 })
         })
         gif.on('finished', function(blob) {
           rev(URL.createObjectURL(blob))
         })
         gif.render()
       })
-    }).catch(console.error.bind(console))
+    }).catch(err => {
+      alert(err)
+    })
   }
 
   componentDidMount () {
@@ -117,11 +128,11 @@ class Gif extends React.Component {
           : null
         }
 
-        <Upload style={{ marginTop: 20 }} accept="image/gif" showUploadList={false} beforeUpload={this.importGif}>
+        <Upload.Dragger accept="image/gif" showUploadList={false} beforeUpload={this.importGif}>
           <Button type="primary" ghost>
             <Icon type="picture" /> 选择图片
           </Button>
-        </Upload>
+        </Upload.Dragger>
         {
             this.state.url
             ? (
