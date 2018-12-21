@@ -28,6 +28,11 @@ const AsyncLrc = Loadable({
   loading: Loading
 })
 
+const AsyncGif = Loadable({
+  loader: () => import('./pages/gif/'),
+  loading: Loading
+})
+
 class App extends Component {
   render() {
     return (
@@ -38,6 +43,7 @@ class App extends Component {
           <Route path="/feather" component={AsyncFeather} />
           <Route path="/sticker" component={AsyncSticker} />
           <Route path="/lrc/:name?" component={AsyncLrc} />
+          <Route path="/gif" component={AsyncGif} />
         </Switch>
       </Router>
     )
